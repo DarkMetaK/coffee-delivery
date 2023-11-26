@@ -23,8 +23,15 @@ export default {
         'gray-100': '#FAFAFA',
       },
       fontFamily: {
-        'heading': 'Baloo 2, sans-serif',
-        'base': 'Roboto, sans-serif',
+        heading: "'Baloo 2', sans-serif",
+        base: "'Roboto', sans-serif",
+      },
+      screens: {
+        md: { max: '960px' },
+        sm: { max: '520px' },
+      },
+      gridTemplateColumns: {
+        autofit: 'repeat(auto-fit, minmax(256px, 1fr))',
       },
     },
   },
