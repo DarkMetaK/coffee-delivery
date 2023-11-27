@@ -6,7 +6,9 @@ export function DefaultLayout() {
   return (
     <>
       <Header />
-      <Outlet />
+      <div className="mt-[104px]">
+        <Outlet />
+      </div>
     </>
   )
 }

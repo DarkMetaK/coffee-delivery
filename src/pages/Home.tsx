@@ -3,7 +3,7 @@ import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
 import HeroImage from '../assets/hero-image.png'
 import { database } from '../db'
 
-import { CoffeeItem } from '../components/CoffeeItem'
+import { CoffeeItemDisplay } from '../components/CoffeeItemDisplay'
 
 export function Home() {
   return (
@@ -61,8 +61,9 @@ export function Home() {
 
         <ul className="grid grid-cols-autofit gap-y-10 gap-x-8">
           {database.map((item) => (
-            <CoffeeItem
+            <CoffeeItemDisplay
               key={item.id}
+              id={item.id}
               imageURL={item.imageURL}
               tags={item.tags}
               title={item.title}

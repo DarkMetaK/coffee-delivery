@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { ShoppingCart } from 'phosphor-react'
+
+import { CartContext } from '../contexts/CartContext'
 
 import { AmountCounter } from './AmountCounter'
 
 interface ICoffeeItem {
+  id: number
   imageURL: string
   tags: string[]
   title: string
@@ -11,7 +14,8 @@ interface ICoffeeItem {
   price: number
 }
 
-export function CoffeeItem({
+export function CoffeeItemDisplay({
+  id,
   imageURL,
   tags,
   title,
@@ -20,10 +24,26 @@ export function CoffeeItem({
 }: ICoffeeItem) {
   const [itemAmount, setItemAmount] = useState(1)
 
+  const { addProductToCart } = useContext(CartContext)
+
   const formatedPrice = price.toLocaleString('pt-BR', {
     style: 'currency',
     currency: 'BRL',
   })
+
+  function handleAddCoffeeToCart() {
+    const coffeeInfo = {
+      id,
+      imageURL,
+      tags,
+      title,
+      description,
+      price,
+      amount: itemAmount,
+    }
+    addProductToCart(coffeeInfo)
+    setItemAmount(1)
+  }
 
   return (
     <li className="bg-gray-200 rounded-tl-[6px] rounded-tr-[36px] rounded-bl-[36px] rounded-br-[6px]">
@@ -58,6 +78,7 @@ export function CoffeeItem({
           <button
             aria-label="Carrinho"
             className="p-2 flex items-center text-gray-200 bg-purple-600 rounded-[6px] transition-colors hover:bg-purple-300"
+            onClick={handleAddCoffeeToCart}
           >
             <ShoppingCart size={20} weight="fill" />
           </button>
