@@ -1,17 +1,16 @@
-import { ReactNode, createContext, useState } from 'react'
+import { ReactNode, createContext, useReducer } from 'react'
 
-interface IProductItem {
-  id: number
-  imageURL: string
-  tags: string[]
-  title: string
-  description: string
-  price: number
-  amount: number
-}
+import { IProductItem, CartReducer } from '../reducers/Cart/reducer'
+import {
+  addProductToCartAction,
+  decreaseProductAmountAction,
+  deleteProductFromCartAction,
+  increaseProductAmountAction,
+} from '../reducers/Cart/actions'
 
 interface ICartContextProps {
   products: IProductItem[]
+  totalAmountOfProducts: number
   addProductToCart: (product: IProductItem) => void
   increaseProductAmount: (productId: number) => void
   decreaseProductAmount: (productId: number) => void
@@ -25,76 +24,34 @@ interface ICartContextProviderProps {
 export const CartContext = createContext({} as ICartContextProps)
 
 export function CartContextProvider({ children }: ICartContextProviderProps) {
-  const [products, setProducts] = useState<IProductItem[]>([])
+  const [productsState, dispatch] = useReducer(CartReducer, [])
 
   function addProductToCart(product: IProductItem) {
-    setProducts((state) => {
-      const productAlreadyAddedToCart = state.findIndex(
-        (item) => item.id === product.id,
-      )
-
-      if (productAlreadyAddedToCart !== -1) {
-        const updatedCart = [...state]
-        updatedCart[productAlreadyAddedToCart].amount += product.amount
-        return updatedCart
-      }
-
-      return [...state, product]
-    })
+    dispatch(addProductToCartAction(product))
   }
 
   function increaseProductAmount(productId: number) {
-    setProducts((state) => {
-      const productIndex = state.findIndex((item) => item.id === productId)
-
-      if (productIndex !== -1) {
-        const updatedCart = [...state]
-        updatedCart[productIndex].amount += 1
-        return updatedCart
-      }
-
-      return [...state]
-    })
+    dispatch(increaseProductAmountAction(productId))
   }
 
   function decreaseProductAmount(productId: number) {
-    setProducts((state) => {
-      const productIndex = state.findIndex((item) => item.id === productId)
-
-      if (productIndex !== -1) {
-        const updatedCart = [...state]
-
-        if (updatedCart[productIndex].amount === 1) {
-          delete updatedCart[productIndex]
-          return updatedCart
-        }
-
-        updatedCart[productIndex].amount -= 1
-        return updatedCart
-      }
-
-      return [...state]
-    })
+    dispatch(decreaseProductAmountAction(productId))
   }
 
   function deleteProductFromCart(productId: number) {
-    setProducts((state) => {
-      const productIndex = state.findIndex((item) => item.id === productId)
-
-      if (productIndex !== -1) {
-        const updatedCart = [...state]
-        delete updatedCart[productIndex]
-        return updatedCart
-      }
-
-      return [...state]
-    })
+    dispatch(deleteProductFromCartAction(productId))
   }
+
+  const totalAmountOfProducts = productsState.reduce<number>(
+    (acc, item) => (acc += item.amount),
+    0,
+  )
 
   return (
     <CartContext.Provider
       value={{
-        products,
+        products: productsState,
+        totalAmountOfProducts,
         addProductToCart,
         increaseProductAmount,
         decreaseProductAmount,

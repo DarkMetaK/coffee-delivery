@@ -6,12 +6,14 @@ import { Logo } from './Logo'
 import { CartContext } from '../contexts/CartContext'
 
 export function Header() {
-  const { products } = useContext(CartContext)
+  const { totalAmountOfProducts } = useContext(CartContext)
 
   return (
     <header className="w-full fixed top-0 bg-gray-100">
       <div className="max-w-[1160px] py-8 px-5 mx-auto flex justify-between items-center">
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
         <nav className="flex gap-3 items-center">
           <Link
             to="/checkout"
@@ -31,7 +33,7 @@ export function Header() {
           >
             <ShoppingCart size={20} weight="fill" />
             <span className="w-5 h-5 rounded-full bg-yellow-600 text-white font-base leading-snug text-xs font-bold flex items-center justify-center absolute top-[-8px] right-[-8px]">
-              {products.length}
+              {totalAmountOfProducts}
             </span>
           </Link>
         </nav>
