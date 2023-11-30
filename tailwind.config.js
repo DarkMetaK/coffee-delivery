@@ -27,11 +27,13 @@ export default {
         base: "'Roboto', sans-serif",
       },
       screens: {
+        lg: { max: '1024px' },
         md: { max: '960px' },
         sm: { max: '520px' },
       },
       gridTemplateColumns: {
         autofit: 'repeat(auto-fit, minmax(256px, 1fr))',
+        checkout: '7fr 5fr',
       },
     },
   },

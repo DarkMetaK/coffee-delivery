@@ -6,3 +6,9 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+
+@layer components {
+  .checkbox-label:has(input:checked) {
+    @apply border-purple-300 bg-purple-100 focus-within:bg-gray-500;
+  }
+}

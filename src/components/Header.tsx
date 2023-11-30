@@ -2,8 +2,8 @@ import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { MapPin, ShoppingCart } from 'phosphor-react'
 
-import { Logo } from './Logo'
-import { CartContext } from '../contexts/CartContext'
+import { Logo } from '@components/Logo'
+import { CartContext } from '@contexts/CartContext'
 
 export function Header() {
   const { totalAmountOfProducts } = useContext(CartContext)

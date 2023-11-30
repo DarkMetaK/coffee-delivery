@@ -1,11 +1,11 @@
 import { useState, useContext } from 'react'
 import { ShoppingCart } from 'phosphor-react'
 
-import { CartContext } from '../contexts/CartContext'
+import { CartContext } from '@contexts/CartContext'
 
-import { AmountCounter } from './AmountCounter'
+import { AmountCounter } from '@components/AmountCounter'
 
-interface ICoffeeItem {
+interface ICoffeeItemDisplayProps {
   id: number
   imageURL: string
   tags: string[]
@@ -21,7 +21,7 @@ export function CoffeeItemDisplay({
   title,
   description,
   price,
-}: ICoffeeItem) {
+}: ICoffeeItemDisplayProps) {
   const [itemAmount, setItemAmount] = useState(1)
 
   const { addProductToCart } = useContext(CartContext)

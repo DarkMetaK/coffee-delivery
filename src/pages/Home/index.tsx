@@ -1,14 +1,14 @@
 import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
 
-import HeroImage from '../assets/hero-image.png'
-import { database } from '../db'
+import HeroImage from '@assets/hero-image.png'
+import { database } from '@/db'
 
-import { CoffeeItemDisplay } from '../components/CoffeeItemDisplay'
+import { CoffeeItemDisplay } from '@components/CoffeeItemDisplay'
 
 export function Home() {
   return (
     <main className="max-w-[1160px] px-5 mx-auto">
-      <section className="flex gap-14 items-center flex-wrap-reverse my-24 md:flex-col md:my-12 sm:gap-8">
+      <section className="flex gap-14 items-center flex-wrap-reverse mb-24 mt-48 md:flex-col md:mb-12 md:mt-24 sm:gap-8">
         <div className="flex-1 md:order-2">
           <h1 className="font-heading text-5xl leading-snug font-extrabold mb-4 text-gray-900 sm:text-[32px]">
             Encontre o café perfeito para qualquer hora do dia
