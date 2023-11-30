@@ -11,7 +11,7 @@ export function Checkout() {
   return (
     <main className="max-w-[1160px] px-5 mx-auto grid grid-cols-checkout gap-8 mt-[144px] lg:grid-cols-1">
       <DeliveryForm />
-      <OrderConfirmation products={products} />
+      <OrderConfirmation />
     </main>
   )
 }

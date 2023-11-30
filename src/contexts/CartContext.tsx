@@ -11,6 +11,7 @@ import {
 interface ICartContextProps {
   products: IProductItem[]
   totalAmountOfProducts: number
+  totalPrice: number
   addProductToCart: (product: IProductItem) => void
   increaseProductAmount: (productId: number) => void
   decreaseProductAmount: (productId: number) => void
@@ -47,11 +48,17 @@ export function CartContextProvider({ children }: ICartContextProviderProps) {
     0,
   )
 
+  const totalPrice = productsState.reduce<number>((acc, item) => {
+    const totalPricePerProduct = item.price * item.amount
+    return (acc += totalPricePerProduct)
+  }, 0)
+
   return (
     <CartContext.Provider
       value={{
         products: productsState,
         totalAmountOfProducts,
+        totalPrice,
         addProductToCart,
         increaseProductAmount,
         decreaseProductAmount,

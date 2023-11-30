@@ -2,21 +2,31 @@ import { Minus, Plus } from 'phosphor-react'
 
 interface IAmountCounter {
   amount: number
-  setAmount: React.Dispatch<React.SetStateAction<number>>
+  setAmount?: React.Dispatch<React.SetStateAction<number>>
+  coffeInCartInfo?: {
+    id: number
+    increaseProductAmount: (productId: number) => void
+    decreaseProductAmount: (productId: number) => void
+  }
 }
 
-export function AmountCounter({ amount, setAmount }: IAmountCounter) {
+export function AmountCounter({
+  amount,
+  setAmount,
+  coffeInCartInfo,
+}: IAmountCounter) {
   function handleReduceAmount() {
-    setAmount((state) => {
-      if (state > 1) {
-        return (state -= 1)
-      }
-      return state
-    })
+    setAmount &&
+      setAmount((state) => {
+        if (state > 1) {
+          return (state -= 1)
+        }
+        return state
+      })
   }
 
   function handleAddAmount() {
-    setAmount((state) => (state += 1))
+    setAmount && setAmount((state) => (state += 1))
   }
 
   return (
@@ -27,7 +37,11 @@ export function AmountCounter({ amount, setAmount }: IAmountCounter) {
         tabIndex={0}
         aria-hidden="false"
         aria-label="Reduzir quantidade"
-        onClick={handleReduceAmount}
+        onClick={() =>
+          coffeInCartInfo
+            ? coffeInCartInfo.decreaseProductAmount(coffeInCartInfo.id)
+            : handleReduceAmount()
+        }
       >
         <Minus size={16} />
       </button>
@@ -43,7 +57,11 @@ export function AmountCounter({ amount, setAmount }: IAmountCounter) {
         tabIndex={0}
         aria-hidden="false"
         aria-label="Aumentar quantidade"
-        onClick={handleAddAmount}
+        onClick={() =>
+          coffeInCartInfo
+            ? coffeInCartInfo.increaseProductAmount(coffeInCartInfo.id)
+            : handleAddAmount()
+        }
       >
         <Plus size={16} />
       </button>

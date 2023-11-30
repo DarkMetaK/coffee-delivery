@@ -12,9 +12,10 @@ export interface IProductItem {
 }
 
 export function CartReducer(state: IProductItem[], action: any) {
-  const productIndexInCart = state.findIndex(
-    (item) => item.id === action.payload.productId,
-  )
+  const productIndexInCart = state.findIndex((item) => {
+    console.log(item)
+    return item.id === action.payload.productId
+  })
 
   switch (action.type) {
     case ActionTypes.ADD_NEW_PRODUCT_TO_CART:
@@ -42,17 +43,21 @@ export function CartReducer(state: IProductItem[], action: any) {
     case ActionTypes.DECREASE_PRODUCT_AMOUNT:
       if (productIndexInCart !== -1) {
         const updatedCart = [...state]
-        updatedCart[productIndexInCart] = {
-          ...updatedCart[productIndexInCart],
-          amount: updatedCart[productIndexInCart].amount - 1,
+
+        if (updatedCart[productIndexInCart].amount > 1) {
+          updatedCart[productIndexInCart] = {
+            ...updatedCart[productIndexInCart],
+            amount: updatedCart[productIndexInCart].amount - 1,
+          }
+          return updatedCart
         }
-        return updatedCart
       }
       return state
     case ActionTypes.DELETE_PRODUCT_FROM_CART:
       if (productIndexInCart !== -1) {
         const updatedCart = [...state]
-        delete updatedCart[productIndexInCart]
+        updatedCart.splice(productIndexInCart, 1)
+        console.log(updatedCart)
         return updatedCart
       }
       return state

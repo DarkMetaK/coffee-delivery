@@ -2,6 +2,7 @@ import { useState, useContext } from 'react'
 import { ShoppingCart } from 'phosphor-react'
 
 import { CartContext } from '@contexts/CartContext'
+import { NumberToCurrency } from '@/utils/NumberToCurrency'
 
 import { AmountCounter } from '@components/AmountCounter'
 
@@ -25,11 +26,6 @@ export function CoffeeItemDisplay({
   const [itemAmount, setItemAmount] = useState(1)
 
   const { addProductToCart } = useContext(CartContext)
-
-  const formatedPrice = price.toLocaleString('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  })
 
   function handleAddCoffeeToCart() {
     const coffeeInfo = {
@@ -71,7 +67,7 @@ export function CoffeeItemDisplay({
       </main>
       <footer className="flex justify-between px-6 pb-5">
         <strong className="font-heading text-2xl leading-snug font-extrabold text-gray-700">
-          {formatedPrice}
+          {NumberToCurrency(price)}
         </strong>
         <div className="flex gap-2">
           <AmountCounter amount={itemAmount} setAmount={setItemAmount} />
