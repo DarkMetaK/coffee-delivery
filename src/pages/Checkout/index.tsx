@@ -65,7 +65,7 @@ export function Checkout() {
   }
 
   return (
-    <main className="max-w-[1160px] px-5 mx-auto">
+    <main className="max-w-[1160px] px-5 mx-auto mb-24">
       <FormProvider {...methods}>
         <form
           className="grid grid-cols-checkout gap-8 mt-[144px] lg:grid-cols-1"

@@ -28,7 +28,7 @@ export function CoffeeItemCheckout({
   } = useContext(CartContext)
 
   return (
-    <li className="flex gap-2 items-start justify-between px-1 pt-2 pb-8 border-b border-gray-400">
+    <li className="flex flex-wrap gap-2 items-start justify-between px-1 pt-2 pb-8 border-b border-gray-400">
       <div className="flex items-center gap-5">
         <img src={imageURL} alt="" className="w-16 h-16 object-cover" />
         <div className="flex flex-col gap-2">
