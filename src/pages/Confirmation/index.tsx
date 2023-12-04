@@ -1,8 +1,39 @@
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { CurrencyDollar, MapPin, Timer } from 'phosphor-react'
+
+import { IProductItem } from '@reducers/Cart/reducer'
 
 import ConfirmationImage from '@assets/ConfirmationImage.png'
 
+interface IOrderInformation {
+  orderItens: IProductItem[]
+  paymentMethod: string
+  cep: string
+  rua: string
+  numero: string
+  complemento?: string
+  bairro: string
+  cidade: string
+  uf: string
+}
+
 export function Confirmation() {
+  const [orderInformation, setOrderInformation] =
+    useState<null | IOrderInformation>(null)
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const orderData = localStorage.getItem('@coffe-delivery:order')
+
+    if (orderData) {
+      setOrderInformation(JSON.parse(orderData))
+    } else {
+      navigate('/')
+    }
+  }, [navigate])
+
   return (
     <main className="max-w-[1160px] px-5 mx-auto mb-24 md:mt-24">
       <div className="grid grid-cols-2 gap-8 items-end mt-[144px] lg:grid-cols-1">
@@ -19,8 +50,12 @@ export function Confirmation() {
                 <MapPin weight="fill" size={16} />
               </div>
               <p>
-                Entrega em <strong>Rua João Daniel Martinelli, 102</strong>
-                <br /> Farrapos - Porto Alegre, RS
+                Entrega em{' '}
+                <strong>
+                  {orderInformation?.rua}, {orderInformation?.numero}
+                </strong>
+                <br /> {orderInformation?.bairro} - {orderInformation?.cidade},{' '}
+                {orderInformation?.uf}
               </p>
             </div>
             <div className="flex items-center gap-3">
@@ -40,7 +75,7 @@ export function Confirmation() {
               <p>
                 Pagamento na entrega
                 <br />
-                <strong>Cartão de Crédito</strong>
+                <strong>{orderInformation?.paymentMethod}</strong>
               </p>
             </div>
           </article>

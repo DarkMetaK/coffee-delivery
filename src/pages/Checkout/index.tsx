@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -56,12 +57,32 @@ type confirmOrderFormData = z.infer<typeof schema>
 export function Checkout() {
   const { products } = useContext(CartContext)
 
+  const navigate = useNavigate()
+
   const methods = useForm<confirmOrderFormData>({
     resolver: zodResolver(schema),
   })
 
   function handleFinishOrder(data: confirmOrderFormData) {
-    alert(JSON.stringify(data, null, 2))
+    if (!products.length) {
+      alert('Adicione ao menos um item no carrinho')
+      return
+    }
+
+    const formatedPaymentMethodName =
+      data.paymentMethod === 'creditCard'
+        ? 'Cartão de Crédito'
+        : data.paymentMethod === 'debitCard'
+          ? 'Cartão de Débito'
+          : 'Dinheiro'
+
+    const orderDetails = {
+      ...data,
+      paymentMethod: formatedPaymentMethodName,
+      orderItens: products,
+    }
+    localStorage.setItem('@coffe-delivery:order', JSON.stringify(orderDetails))
+    navigate('/confirmation')
   }
 
   return (
